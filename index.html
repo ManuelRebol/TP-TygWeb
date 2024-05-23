@@ -8,6 +8,8 @@
     <title>Trabajo Practico Individual</title>
 
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 
     <script>
         $(document).ready(function () {
@@ -24,7 +26,7 @@
             $('aside a').click(function (e) {
                 e.preventDefault();
                 const api = $(this).data('api');
-                perroAleatorio(api);
+                map(api);
             });
 
             function perroAleatorio(api) {
@@ -33,7 +35,7 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {
-                        const contenido =$('#contenido');
+                        const contenido = $('#contenido');
                         contenido.empty(); //vacía el contenido del div
                         if (data.url.endsWith('.mp4') || data.url.endsWith('.webm')) {
                             //Es un video
@@ -45,8 +47,37 @@
                             contenido.append(`<img src="${data.url}" alt="Contenido Aleatorio de Perros">`);
                         }
                     },
-                    error: function (req,status,err) {
-                        console.log(req,status,err);
+                    error: function (req, status, err) {
+                        console.log(req, status, err);
+                        $('main').text('Error al cargar la API.');
+                    }
+                });
+            }
+
+            function map(api) {
+
+
+                var map = L.map('map').setView([-34.904194079571205, -57.925844888358476], 16);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                $.ajax({
+                    url: 'https://cartes.io/api/maps/dac15bc7-ad85-4609-8c91-f366568a842a/markers',
+                    method: 'GET',
+                    dataType: 'json',
+                    accept: application / json,
+                    success: function (data) {
+                        data.markers.forEach(function (marker) {
+                            L.marker([marker.latitude, marker.longitude])
+                            .addTo(map)
+                            .bindPopup(marker.description);
+                        });
+
+                        console.log(data);
+                    },
+                    error: function (req, status, err) {
+                        console.log(req, status, err);
                         $('main').text('Error al cargar la API.');
                     }
                 });
@@ -112,12 +143,11 @@
         <aside>
             <a href="#">Api 1</a>
             <a href="#">Api 2</a>
-            <a href="#">Api 3</a>
         </aside>
         <section>
             <div id="frase">
             </div>
-            <div id="contenido">
+            <div id="map">
             </div>
             <!-- <div id="map"></div> -->
         </section>
