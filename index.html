@@ -20,10 +20,41 @@
 
             const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
             $('#frase').text(fraseAleatoria.text).addClass(fraseAleatoria.class);
-        });
 
+            $('aside a').click(function (e) {
+                e.preventDefault();
+                const api = $(this).data('api');
+                perroAleatorio(api);
+            });
+
+            function perroAleatorio(api) {
+                $.ajax({
+                    url: 'https://random.dog/woof.json',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        const contenido =$('#contenido');
+                        contenido.empty(); //vacía el contenido del div
+                        if (data.url.endsWith('.mp4') || data.url.endsWith('.webm')) {
+                            //Es un video
+                            contenido.append(`<video controls>
+                                                  <source src="${data.url}" type="video/mp4">
+                                               </video>`);
+                        } else {
+                            //Es una imagen o gif
+                            contenido.append(`<img src="${data.url}" alt="Contenido Aleatorio de Perros">`);
+                        }
+                    },
+                    error: function (req,status,err) {
+                        console.log(req,status,err);
+                        $('main').text('Error al cargar la API.');
+                    }
+                });
+            }
+        });
     </script>
 
+    <!-- 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap">
     </script>
     <script>
@@ -53,11 +84,11 @@
     </script>
     <style>
         #map {
-            height: 500px;
+            height: 100%;
             width: 100%;
         }
     </style>
-
+     -->
 
 
 
@@ -79,14 +110,16 @@
     </header>
     <main>
         <aside>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam voluptates quos repellat, est laborum
-                ipsam. Repudiandae minus pariatur modi, quae minima quidem, in voluptas deserunt obcaecati, officia
-                dolor sed sit.</p>
+            <a href="#">Api 1</a>
+            <a href="#">Api 2</a>
+            <a href="#">Api 3</a>
         </aside>
         <section>
             <div id="frase">
             </div>
-            <div id="map"></div>
+            <div id="contenido">
+            </div>
+            <!-- <div id="map"></div> -->
         </section>
     </main>
     <footer>
