@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Trabajo Practico Individual</title>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const frases = [
+                { text: "“No sé con qué armas se peleará la tercera guerra mundial, pero la cuarta será con palos y piedras” - Albert Einstein", class: "sombra1" },
+                { text: "“Un hombre provisto de papel, lápiz y goma, y con sujeción a una disciplina estricta, es, en efecto, una Máquina de Turing universal” - Alan Turing", class: "sombra2" },
+                { text: "“A partir de entonces, cuando algo iba mal con un ordenador, nos decían que tenía bichos (bugs)” - Grace Murray Hopper", class: "sombra3" }
+            ];
+
+
+            const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+            $('#frase').text(fraseAleatoria.text).addClass(fraseAleatoria.class);
+        });
+
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap">
+    </script>
+    <script>
+        // Esta función se llama cuando la API de Google Maps se ha cargado
+        function iniciarMap() {
+            // Definir las coordenadas y el nivel de zoom
+            var coord = { lat: -34.904194079571205, lng: -57.925844888358476 };
+            var zoom = 10;
+
+            // Crear el mapa centrado en las coordenadas especificadas
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: zoom,
+                center: coord
+            });
+
+            // Añadir un marcador en las mismas coordenadas
+            var marker = new google.maps.Marker({
+                position: coord,
+                map: map
+            });
+        }
+
+        $(document).ready(function () {
+            // Esperar a que el DOM esté listo antes de inicializar el mapa
+            iniciarMap();
+        });
+    </script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+
+
+
+
+</head>
+
+<body id="container">
+    <header>
+        <img class="logo" src="./logo.png" alt="prueba">
+        <div class="titulo">
+            <h1>
+                Trabajo Práctico N° 1
+            </h1>
+            <h2>
+                Manuel Rebol
+            </h2>
+        </div>
+
+
+    </header>
+    <main>
+        <aside>
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam voluptates quos repellat, est laborum
+                ipsam. Repudiandae minus pariatur modi, quae minima quidem, in voluptas deserunt obcaecati, officia
+                dolor sed sit.</p>
+        </aside>
+        <section>
+            <div id="frase">
+            </div>
+            <div id="map"></div>
+        </section>
+    </main>
+    <footer>
+        TygWeb 2024
+    </footer>
+</body>
+
+</html>

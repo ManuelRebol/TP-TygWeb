@@ -1,0 +1,47 @@
+body{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid silver;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main{
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    flex: 15;
+}
+
+header{
+    border: 1px solid pink;
+    display: flex;
+}
+
+header .logo{
+    height: 8em;
+    width: 8em;
+}
+
+header .titulo{
+    flex: 1;
+    text-align: center;
+    align-content: center;
+    padding-right: 8em;
+}
+
+section{
+    border: 1px solid blue;
+    flex:4;
+
+}
+
+aside{
+    border: 1px solid lime;
+    flex:1;
+
+}
+footer{
+    border: 1px solid red;
+    flex: 0.5;
+}
