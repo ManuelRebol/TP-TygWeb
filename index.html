@@ -5,15 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="style.css">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+        type="text/css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
 
     <title>Trabajo Practico Individual</title>
     <script>
         $(document).ready(function () {
+
             $('.apis').hide();
 
             const frases = [
@@ -41,6 +46,9 @@
                 mapa();
             });
 
+
+
+
             function perroAleatorio() {
                 $('#perroAleatorio').show();
 
@@ -66,15 +74,26 @@
                 });
             }
 
+
             function mapa() {
                 $('#mapa').show();
 
                 mapboxgl.accessToken = 'pk.eyJ1IjoibWFub2xhcyIsImEiOiJjbHdtbjV2dG8yMmZqMnNvY2JuZjZodXJhIn0.GriQgL3MrRjqDpBCOfWoZw';
 
                 // Inicializar el mapa
-                var mapa = new mapboxgl.Map({
+                const mapa = new mapboxgl.Map({
                     container: 'mapa',
-                    style: 'mapbox://styles/mapbox/outdoors-v12',
+                    style: {
+                        version: 8,
+                        layers: [],
+                        sources: {},
+                        imports: [
+                            {
+                                id: 'basemap',
+                                url: 'mapbox://styles/mapbox/standard',
+                            }
+                        ]
+                    },
                     //mapbox://styles/mapbox/standard
                     // mapbox://styles/mapbox/streets-v12
                     // mapbox://styles/mapbox/outdoors-v12
@@ -89,16 +108,9 @@
                     boxzoom: true,
                     projection: 'globe',
                     attributionControl: false,
-                    config: {
-                        basemap: {
-                            lightPreset: 'night'
-                        }
-                    }
-
-
-
 
                 });
+
 
                 mapa.addControl(
                     new MapboxGeocoder({
@@ -120,8 +132,6 @@
                     customAttribution: 'TP individual TygWeb'
                 }));
                 mapa.addControl(new mapboxgl.FullscreenControl({ container: $('body') }));
-
-
 
                 // Función para agregar un marcador
                 function addMarker(lng, lat) {
@@ -174,9 +184,19 @@
                         console.error('Error al cargar la API:', error);
                     }
                 });
+                $('#modo').on('change', function () {
+                    mapa.setConfigProperty('basemap', 'lightPreset', this.value);
+                    console.log(this.value)
+                });
+
 
             }
+
+
+
+
         });
+
     </script>
 </head>
 
@@ -207,10 +227,10 @@
                 <div class="map-overlay-inner">
                     <fieldset class="select-fieldset">
                         <label>seleccione modo</label>
-                        <select id="modo" name="modo">
-                            <option value="dia" selected="">Dia</option>
-                            <option value="atardecer">Atardecer</option>
-                            <option value="noche">Noche</option>
+                        <select id="modo" name="lightPreset">
+                            <option value="day" selected="">Dia</option>
+                            <option value="dawn">Atardecer</option>
+                            <option value="night">Noche</option>
                         </select>
                     </fieldset>
                 </div>

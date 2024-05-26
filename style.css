@@ -34,6 +34,7 @@ header .titulo{
 section{
     border: 1px solid blue;
     flex:4;
+    position: relative;
 
 }
 
@@ -63,6 +64,7 @@ footer{
 
 section #mapa {
     height: 100%;
+   
 }
 
 section img, section video {
@@ -70,4 +72,50 @@ section img, section video {
     max-height: 65vh;
     object-fit: contain;
     box-shadow: 1px 1px 0 0 #ffffff inset, 0 2px 3px 0 #B3B3B3;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 10vh;
+    left: 10px;
+    font:
+        12px/20px 'Helvetica Neue',
+        Arial,
+        Helvetica,
+        sans-serif;
+    width: 200px;
+    padding: 10px;
+    z-index: 1; 
+}
+
+.map-overlay .map-overlay-inner {
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.map-overlay-inner fieldset {
+    display: flex;
+    justify-content: space-between;
+    border: none;
+}
+
+.map-overlay-inner label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.map-overlay-inner .select-fieldset {
+    display: block;
+}
+
+.map-overlay-inner .select-fieldset label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.map-overlay-inner .select-fieldset select {
+    width: 100%;
 }
