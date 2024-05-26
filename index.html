@@ -3,16 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="style.css">
-    <title>Trabajo Practico Individual</title>
-
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
 
+    <title>Trabajo Practico Individual</title>
     <script>
         $(document).ready(function () {
+            $('.apis').hide();
+
             const frases = [
                 { text: "“No sé con qué armas se peleará la tercera guerra mundial, pero la cuarta será con palos y piedras” - Albert Einstein", class: "sombra1" },
                 { text: "“Un hombre provisto de papel, lápiz y goma, y con sujeción a una disciplina estricta, es, en efecto, una Máquina de Turing universal” - Alan Turing", class: "sombra2" },
@@ -23,106 +26,158 @@
             const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
             $('#frase').text(fraseAleatoria.text).addClass(fraseAleatoria.class);
 
-            $('aside a').click(function (e) {
+            $('#api1').click(function (e) {
+                $('.apis').empty();
+                $('.apis').hide();
                 e.preventDefault();
-                const api = $(this).data('api');
-                map(api);
+                perroAleatorio()
             });
 
-            function perroAleatorio(api) {
+            $('#api2').click(function (e) {
+                $('.apis').empty();
+                $('.apis').hide();
+
+                e.preventDefault();
+                mapa();
+            });
+
+            function perroAleatorio() {
+                $('#perroAleatorio').show();
+
                 $.ajax({
                     url: 'https://random.dog/woof.json',
                     method: 'GET',
                     dataType: 'json',
                     success: function (data) {
-                        const contenido = $('#contenido');
-                        contenido.empty(); //vacía el contenido del div
+                        const perroAleatorio = $('#perroAleatorio');
                         if (data.url.endsWith('.mp4') || data.url.endsWith('.webm')) {
                             //Es un video
-                            contenido.append(`<video controls>
+                            perroAleatorio.append(`<video controls>
                                                   <source src="${data.url}" type="video/mp4">
                                                </video>`);
                         } else {
                             //Es una imagen o gif
-                            contenido.append(`<img src="${data.url}" alt="Contenido Aleatorio de Perros">`);
+                            perroAleatorio.append(`<img src="${data.url}" alt="perroAleatorio Aleatorio de Perros">`);
                         }
                     },
                     error: function (req, status, err) {
                         console.log(req, status, err);
-                        $('main').text('Error al cargar la API.');
                     }
                 });
             }
 
-            function map(api) {
+            function mapa() {
+                $('#mapa').show();
+
+                mapboxgl.accessToken = 'pk.eyJ1IjoibWFub2xhcyIsImEiOiJjbHdtbjV2dG8yMmZqMnNvY2JuZjZodXJhIn0.GriQgL3MrRjqDpBCOfWoZw';
+
+                // Inicializar el mapa
+                var mapa = new mapboxgl.Map({
+                    container: 'mapa',
+                    style: 'mapbox://styles/mapbox/outdoors-v12',
+                    //mapbox://styles/mapbox/standard
+                    // mapbox://styles/mapbox/streets-v12
+                    // mapbox://styles/mapbox/outdoors-v12
+                    // mapbox://styles/mapbox/light-v11
+                    // mapbox://styles/mapbox/dark-v11
+                    // mapbox://styles/mapbox/satellite-v9
+                    // mapbox://styles/mapbox/satellite-streets-v12
+                    // mapbox://styles/mapbox/navigation-day-v1
+                    // mapbox://styles/mapbox/navigation-night-v1
+                    center: [-57.92588780370186, -34.90405329824272], // Coordenadas iniciales [lng, lat]
+                    zoom: 10,
+                    boxzoom: true,
+                    projection: 'globe',
+                    attributionControl: false,
+                    config: {
+                        basemap: {
+                            lightPreset: 'night'
+                        }
+                    }
 
 
-                var map = L.map('map').setView([-34.904194079571205, -57.925844888358476], 16);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
 
-                $.ajax({
-                    url: 'https://cartes.io/api/maps/dac15bc7-ad85-4609-8c91-f366568a842a/markers',
-                    method: 'GET',
-                    dataType: 'json',
-                    accept: application / json,
-                    success: function (data) {
-                        data.markers.forEach(function (marker) {
-                            L.marker([marker.latitude, marker.longitude])
-                            .addTo(map)
-                            .bindPopup(marker.description);
-                        });
 
-                        console.log(data);
+                });
+
+                mapa.addControl(
+                    new MapboxGeocoder({
+                        accessToken: mapboxgl.accessToken,
+                        mapboxgl: mapboxgl
+                    })
+                );
+
+                // Añadir controles de navegación
+                mapa.addControl(new mapboxgl.NavigationControl());
+                mapa.addControl(new mapboxgl.GeolocateControl({
+                    positionOptions: {
+                        enableHighAccuracy: true
                     },
-                    error: function (req, status, err) {
-                        console.log(req, status, err);
-                        $('main').text('Error al cargar la API.');
+                    trackUserLocation: true,
+                    showUserHeading: true
+                }));
+                mapa.addControl(new mapboxgl.AttributionControl({
+                    customAttribution: 'TP individual TygWeb'
+                }));
+                mapa.addControl(new mapboxgl.FullscreenControl({ container: $('body') }));
+
+
+
+                // Función para agregar un marcador
+                function addMarker(lng, lat) {
+                    const markerHeight = 56;
+                    const markerRadius = 10;
+                    const linearOffset = 25;
+                    const popupOffsets = {
+                        'top': [0, 0],
+                        'top-left': [0, 0],
+                        'top-right': [0, 0],
+                        'bottom': [0, -markerHeight],
+                        'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                        'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                        'left': [markerRadius, (markerHeight - markerRadius) * -1],
+                        'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+                    };
+
+
+                    new mapboxgl.Marker({
+                        color: 'red',
+                        scale: 2
+                    })
+                        .setLngLat([lng, lat])
+                        .addTo(mapa)
+                        .setPopup(new mapboxgl.Popup({
+                            maxWidth: '400px',
+                            offset: popupOffsets
+                        }).setHTML(`<h3>Universidad Tecnológica Nacional – Facultad Regional La Plata (U.T.N. – F.R.L.P.)</h3>Coordenadas: ${lat}, ${lng}`)) // Añadir popup al marcador
+                        .togglePopup();
+                }
+
+                // Realizar la solicitud a la API de Mapbox
+                $.ajax({
+                    url: 'https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json',
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        access_token: mapboxgl.accessToken
+                    },
+                    success: function (response) {
+                        var coord = { lat: -57.92588780370186, lng: -34.90405329824272 };
+                        //Llamar a la función para agregar un marcador
+                        addMarker(coord.lat, coord.lng);
+
+                        console.log('Mapa cargado con éxito');
+                    },
+                    error: function (error) {
+                        console.error('Error al cargar la API:', error);
                     }
                 });
+
             }
         });
     </script>
-
-    <!-- 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap">
-    </script>
-    <script>
-        // Esta función se llama cuando la API de Google Maps se ha cargado
-        function iniciarMap() {
-            // Definir las coordenadas y el nivel de zoom
-            var coord = { lat: -34.904194079571205, lng: -57.925844888358476 };
-            var zoom = 10;
-
-            // Crear el mapa centrado en las coordenadas especificadas
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: zoom,
-                center: coord
-            });
-
-            // Añadir un marcador en las mismas coordenadas
-            var marker = new google.maps.Marker({
-                position: coord,
-                map: map
-            });
-        }
-
-        $(document).ready(function () {
-            // Esperar a que el DOM esté listo antes de inicializar el mapa
-            iniciarMap();
-        });
-    </script>
-    <style>
-        #map {
-            height: 100%;
-            width: 100%;
-        }
-    </style>
-     -->
-
-
-
 </head>
 
 <body id="container">
@@ -141,15 +196,25 @@
     </header>
     <main>
         <aside>
-            <a href="#">Api 1</a>
-            <a href="#">Api 2</a>
+            <a href="#" id="api1">Api 1</a>
+            <a href="#" id="api2">Api 2</a>
         </aside>
         <section>
-            <div id="frase">
+            <div id="frase"></div>
+            <div id="perroAleatorio" class="apis"></div>
+            <div id="mapa" class="apis"></div>
+            <div class="map-overlay top">
+                <div class="map-overlay-inner">
+                    <fieldset class="select-fieldset">
+                        <label>seleccione modo</label>
+                        <select id="modo" name="modo">
+                            <option value="dia" selected="">Dia</option>
+                            <option value="atardecer">Atardecer</option>
+                            <option value="noche">Noche</option>
+                        </select>
+                    </fieldset>
+                </div>
             </div>
-            <div id="map">
-            </div>
-            <!-- <div id="map"></div> -->
         </section>
     </main>
     <footer>
