@@ -1,73 +1,89 @@
-body{
+body {
     display: flex;
     flex-direction: column;
-    border: 1px solid silver;
     min-height: 100vh;
     margin: 0;
     overflow-y: scroll;
 }
 
-main{
+main {
     display: flex;
     box-sizing: border-box;
     justify-content: space-between;
     flex: 15;
 }
 
-header{
-    border: 1px solid pink;
+header {
+    background-color: #F2EFE5;
     display: flex;
 }
 
-header .logo{
+header .logo {
     height: 8em;
     width: 8em;
 }
 
-header .titulo{
+header .titulo {
     flex: 1;
     text-align: center;
     align-content: center;
     padding-right: 8em;
 }
 
-section{
-    border: 1px solid blue;
-    flex:4;
+section {
+    text-align: center;
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     position: relative;
 
 }
 
-aside{
-    border: 1px solid lime;
-    flex:1;
+section #frase {
+    font-family: "Bebas Neue", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 30px;
+    overflow-y: auto;
+}
+
+aside {
+    background-color: #E3E1D9;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
+
     justify-content: space-around;
+    max-width: 14vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
 
 }
-footer{
-    border: 1px solid red;
+
+footer {
+    background-color: #C7C8CC;
     flex: 0.5;
-    text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: end;
     flex-shrink: 0;
 }
 
 #perroAleatorio {
-    height: 100%;
-    width: 100%;
+    min-height: fit-content;
+    min-width: fit-content;
     max-width: 100%;
     max-height: 70vh;
-    justify-content: center;
 }
 
 section #mapa {
     height: 100%;
-   
+
 }
 
-section img, section video {
+section img,
+section video {
     max-width: 100%;
     max-height: 65vh;
     object-fit: contain;
@@ -85,7 +101,7 @@ section img, section video {
         sans-serif;
     width: 200px;
     padding: 10px;
-    z-index: 1; 
+    z-index: 1;
 }
 
 .map-overlay .map-overlay-inner {
@@ -94,6 +110,71 @@ section img, section video {
     border-radius: 3px;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.button-19 {
+    appearance: button;
+    background-color: #1899D6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: din-round, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    padding: 13px 16px;
+    text-align: center;
+    text-transform: uppercase;
+    touch-action: manipulation;
+    transform: translateZ(0);
+    transition: filter .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.button-19:after {
+    background-clip: padding-box;
+    background-color: #1CB0F6;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+
+.button-19:main,
+.button-19:focus {
+    user-select: auto;
+}
+
+.button-19:hover:not(:disabled) {
+    filter: brightness(1.1);
+    -webkit-filter: brightness(1.1);
+}
+
+.button-19:disabled {
+    cursor: auto;
+}
+
+.button-19:active {
+    border-width: 4px 0 0;
+    background: none;
 }
 
 .map-overlay-inner fieldset {
