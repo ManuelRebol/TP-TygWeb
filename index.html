@@ -1,107 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <link rel="stylesheet" href="style.css" />
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script
-        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-    <link rel="stylesheet"
-        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
-        type="text/css">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Quicksand&display=swap" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Quicksand&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
     <title>Trabajo Practico Individual</title>
     <script src="index.js"></script>
-</head>
+  </head>
 
-<body id="container">
+  <body id="container">
     <header>
-        <img class="logo" src="./logo.png" alt="prueba">
-        <div class="titulo">
-            <h1>
-                Trabajo Práctico N° 1
-            </h1>
-            <h2>
-                Manuel Rebol
-            </h2>
-        </div>
-
-
+      <img class="logo" src="./logo.png" alt="prueba" />
+      <div class="titulo">
+        <h1>Trabajo Práctico N° 1</h1>
+        <h2>Manuel Rebol</h2>
+      </div>
     </header>
     <main>
-        <aside>
-            <button id="api1" class="button-19" role="button">Api 1</button>
-            <button id="api2" class="button-19" role="button">Api 2</button>
-        </aside>
-        <section>
-            <div id="frase"></div>
-            <div id="perroAleatorio" class="apis"></div>
-            <div id="mapa" class="apis"></div>
-            <div class="map-overlay top">
-                <div class="map-overlay-inner">
-                    <div class="switch">
-                        <div><input type="checkbox" id="switch" /><label for="switch">Toggle</label></div>
-                        <p>Vista Satelital</p>
-                    </div>
-                    <fieldset>
-                        <label style="font:
-                        20px/20px 'Helvetica Neue',
-                        Arial,
-                        Helvetica,
-                        sans-serif;
-                        color:#7a7a7a;
-                        padding-bottom: 4px;">Modo</label>
-                        <form id="app-cover">
-                            <div id="select-box">
-
-                                <input type="checkbox" id="options-view-button">
-                                <div id="select-button" class="brd">
-                                    <div id="selected-value">
-                                        <span>Dia</span>
-                                    </div>
-                                </div>
-                                <div id="options">
-                                    <div class="option">
-                                        <input class="s-c top inputDay" type="radio" name="platform" value="day">
-                                        <input class="s-c bottom inputDay" type="radio" name="platform" value="day">
-                                        <i class="fab fa-day"></i>
-                                        <span class="label">Dia</span>
-                                        <span class="opt-val">Dia</span>
-                                    </div>
-
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="dawn">
-                                        <input class="s-c bottom" type="radio" name="platform" value="dawn">
-                                        <i class="fab fa-dribbble"></i>
-                                        <span class="label">Atardecer</span>
-                                        <span class="opt-val">Atardecer</span>
-                                    </div>
-
-                                    <div class="option">
-                                        <input class="s-c top" type="radio" name="platform" value="night">
-                                        <input class="s-c bottom" type="radio" name="platform" value="night">
-                                        <i class="fab fa-behance"></i>
-                                        <span class="label">Noche</span>
-                                        <span class="opt-val">Noche</span>
-                                    </div>
-                                    <div id="option-bg"></div>
-                                </div>
-                            </div>
-                        </form>
-                    </fieldset>
+      <aside>
+        <button id="api1" class="button-19" role="button">Api 1</button>
+        <button id="api2" class="button-19" role="button">Api 2</button>
+      </aside>
+      <section>
+        <div id="fraseContainer">
+          <div id="frase"></div>
+          <div class="map-overlay top">
+            <div class="map-overlay-inner">
+              <div class="switch">
+                <div>
+                  <input type="checkbox" id="switch" /><label for="switch"
+                    >Toggle</label
+                  >
                 </div>
-            </div>
-        </section>
-    </main>
-    <footer>
-        TygWeb 2024
-    </footer>
-</body>
+                <p>Vista Satelital</p>
+              </div>
+              <fieldset>
+                <label
+                  style="
+                    font: 20px/20px 'Helvetica Neue', Arial, Helvetica,
+                      sans-serif;
+                    color: #7a7a7a;
+                    padding-bottom: 4px;
+                  "
+                  >Modo</label
+                >
+                <form id="app-cover">
+                  <div id="select-box">
+                    <input type="checkbox" id="options-view-button" />
+                    <div id="select-button" class="brd">
+                      <div id="selected-value">
+                        <span>Dia</span>
+                      </div>
+                    </div>
+                    <div id="options">
+                      <div class="option">
+                        <input
+                          class="s-c top inputDay"
+                          type="radio"
+                          name="platform"
+                          value="day"
+                        />
+                        <input
+                          class="s-c bottom inputDay"
+                          type="radio"
+                          name="platform"
+                          value="day"
+                        />
+                        <i class="fab fa-day"></i>
+                        <span class="label">Dia</span>
+                        <span class="opt-val">Dia</span>
+                      </div>
 
+                      <div class="option">
+                        <input
+                          class="s-c top"
+                          type="radio"
+                          name="platform"
+                          value="dawn"
+                        />
+                        <input
+                          class="s-c bottom"
+                          type="radio"
+                          name="platform"
+                          value="dawn"
+                        />
+                        <i class="fab fa-dribbble"></i>
+                        <span class="label">Atardecer</span>
+                        <span class="opt-val">Atardecer</span>
+                      </div>
+
+                      <div class="option">
+                        <input
+                          class="s-c top"
+                          type="radio"
+                          name="platform"
+                          value="night"
+                        />
+                        <input
+                          class="s-c bottom"
+                          type="radio"
+                          name="platform"
+                          value="night"
+                        />
+                        <i class="fab fa-behance"></i>
+                        <span class="label">Noche</span>
+                        <span class="opt-val">Noche</span>
+                      </div>
+                      <div id="option-bg"></div>
+                    </div>
+                  </div>
+                </form>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+
+        <div id="perroAleatorio" class="apis"></div>
+        <div id="mapa" class="apis"></div>
+      </section>
+    </main>
+    <footer>TygWeb 2024</footer>
+  </body>
 </html>
