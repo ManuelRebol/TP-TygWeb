@@ -25,7 +25,9 @@ $(document).ready(function () {
         $('.apis').empty();
         $('.apis').hide();
         $('.map-overlay').hide();
-        $('#modo').val('day');
+        $('.inputDay').prop('checked', true);
+        $('#options-view-button').prop('disabled', false);
+        $('#switch').prop('checked',false).change();
 
         e.preventDefault();
         mapa();
@@ -70,17 +72,8 @@ $(document).ready(function () {
         const mapa = new mapboxgl.Map({
             container: 'mapa',
             style:'mapbox://styles/mapbox/standard',
-            //mapbox://styles/mapbox/standard
-            // mapbox://styles/mapbox/streets-v12
-            // mapbox://styles/mapbox/outdoors-v12
-            // mapbox://styles/mapbox/light-v11
-            // mapbox://styles/mapbox/dark-v11
-            // mapbox://styles/mapbox/satellite-v9
-            // mapbox://styles/mapbox/satellite-streets-v12
-            // mapbox://styles/mapbox/navigation-day-v1
-            // mapbox://styles/mapbox/navigation-night-v1
             center: [-57.92588780370186, -34.90405329824272], // Coordenadas iniciales [lng, lat]
-            zoom: 10,
+            zoom: 2,
             boxzoom: true,
             projection: 'globe',
             attributionControl: false,
@@ -161,9 +154,26 @@ $(document).ready(function () {
                 console.error('Error al cargar la API:', error);
             }
         });
-        $('#modo').on('change', function () {
+        $('input[name="platform"]').on('change', function () {
             mapa.setConfigProperty('basemap', 'lightPreset', this.value);
-            console.log(this.value)
+        });
+
+        $('#switch').on('change',function(){
+            if(this.checked){
+                mapa.setStyle('mapbox://styles/mapbox/satellite-streets-v12');
+                
+                $('.inputDay').prop('checked', true);
+                $('#options-view-button').prop('checked', false);
+                $('#options-view-button').prop('disabled', true);
+                
+
+
+
+
+            }else{
+                $('#options-view-button').prop('disabled', false);
+                mapa.setStyle('mapbox://styles/mapbox/standard');
+            }
         });
     }
 });

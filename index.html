@@ -36,7 +36,7 @@
     </header>
     <main>
         <aside>
-            <button id="api1" class="button-19" role="button">Api 1</button> 
+            <button id="api1" class="button-19" role="button">Api 1</button>
             <button id="api2" class="button-19" role="button">Api 2</button>
         </aside>
         <section>
@@ -45,13 +45,55 @@
             <div id="mapa" class="apis"></div>
             <div class="map-overlay top">
                 <div class="map-overlay-inner">
-                    <fieldset class="select-fieldset">
-                        <label>Seleccione Modo</label>
-                        <select id="modo" name="lightPreset">
-                            <option value="day" selected="">Dia</option>
-                            <option value="dawn">Atardecer</option>
-                            <option value="night">Noche</option>
-                        </select>
+                    <div class="switch">
+                        <div><input type="checkbox" id="switch" /><label for="switch">Toggle</label></div>
+                        <p>Vista Satelital</p>
+                    </div>
+                    <fieldset>
+                        <label style="font:
+                        20px/20px 'Helvetica Neue',
+                        Arial,
+                        Helvetica,
+                        sans-serif;
+                        color:#7a7a7a;
+                        padding-bottom: 4px;">Modo</label>
+                        <form id="app-cover">
+                            <div id="select-box">
+
+                                <input type="checkbox" id="options-view-button">
+                                <div id="select-button" class="brd">
+                                    <div id="selected-value">
+                                        <span>Dia</span>
+                                    </div>
+                                </div>
+                                <div id="options">
+                                    <div class="option">
+                                        <input class="s-c top inputDay" type="radio" name="platform" value="day">
+                                        <input class="s-c bottom inputDay" type="radio" name="platform" value="day">
+                                        <i class="fab fa-day"></i>
+                                        <span class="label">Dia</span>
+                                        <span class="opt-val">Dia</span>
+                                    </div>
+
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="dawn">
+                                        <input class="s-c bottom" type="radio" name="platform" value="dawn">
+                                        <i class="fab fa-dribbble"></i>
+                                        <span class="label">Atardecer</span>
+                                        <span class="opt-val">Atardecer</span>
+                                    </div>
+
+                                    <div class="option">
+                                        <input class="s-c top" type="radio" name="platform" value="night">
+                                        <input class="s-c bottom" type="radio" name="platform" value="night">
+                                        <i class="fab fa-behance"></i>
+                                        <span class="label">Noche</span>
+                                        <span class="opt-val">Noche</span>
+                                    </div>
+                                    <div id="option-bg"></div>
+                                </div>
+                            </div>
+                        </form>
                     </fieldset>
                 </div>
             </div>
